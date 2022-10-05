@@ -1,0 +1,67 @@
+﻿<h1 id="module-integrating-with-unmanaged-code">Module: Integrating with Unmanaged Code</h1>
+<h2 id="lesson-creating-and-using-dynamic-objects">Lesson: Creating and using Dynamic Objects</h2>
+<h3 id="lab-interoperation-with-microsoft-word">Lab: Interoperation with Microsoft Word</h3>
+<h4 id="preparation-steps">Preparation Steps</h4>
+<ol>
+<li><p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+</li>
+<li><p>Navigate to <strong>[Repository Root]\Labs\InteropLab\Starter\FourthCoffee.ExceptionLogger</strong>, and then open the <strong>FourthCoffee.ExceptionLogger.sln</strong> file.</p>
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="demonstration-steps">Demonstration Steps</h4>
+<ol>
+<li>In <strong>Solution Explorer</strong>, right-click the <strong>FourthCoffee.ExceptionLogger</strong> project, and then click <strong>Add</strong> and then click <strong>Reference</strong>.</li>
+<li>In the <strong>Reference Manager – FourthCoffee.ExceptionLogger</strong> dialog box, perform the following steps, and then click <strong>OK</strong>:
+<ul>
+<li>Expand <strong>COM</strong>, and then click <strong>Type Libraries</strong>.</li>
+<li>In the <strong>Search</strong> text box, type <strong>Word</strong>.</li>
+<li>In the assembly list, select <strong>Microsoft Word [Version Number] Object Library</strong>, and then select the <strong>Microsoft Word [Version Number] Object Library</strong> check box.</li>
+</ul>
+<blockquote>
+<p>**Note 😗* [Version Number] can be greater than 14.</p>
+</blockquote>
+</li>
+<li>In Visual Studio, on the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 01: Bring the Microsoft.Office.Interop.Word namespace into scope.</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">using Microsoft.Office.Interop.Word;
+</code></pre>
+</li>
+<li>Double-click the <strong>TODO: 02: Declare a global object to encapsulate Microsoft Word</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">dynamic _word;
+</code></pre>
+</li>
+<li>Double-click the <strong>TODO: 03: Instantiate the _word object</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">this._word = new Application();
+</code></pre>
+</li>
+<li>Double-click the <strong>TODO: 04: Create a blank Word document</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">this._word.Documents.Add().Activate();
+</code></pre>
+</li>
+<li>In the code editor, look at the following helper methods that wrap the Word COM API:
+<ul>
+<li>The <strong>GetEndOfDocument</strong> method places the cursor at the end of the document. The <strong>-1</strong> converts the <strong>End</strong> property to a 0-based index value. Without the <strong>-1</strong>, the CLR will throw an <strong>IndexOutOfRange</strong> exception.</li>
+<li>The <strong>AppendText</strong> method adds text to the end of the document, in the bold and/or italic style.</li>
+<li>The <strong>InsertCarriageReturn</strong> method inserts a carriage return at the end of the document.</li>
+<li>The <strong>Save</strong> method deletes any file with the same name and then saves the current Word document.</li>
+</ul>
+</li>
+<li>Double-click the <strong>App.config</strong> file inside the <strong>FourthCoffee.ExceptionLogger</strong> project and change the <strong>[Repository Root]</strong> to your repository destination.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Exception Logger</strong> application, click <strong>Export</strong>.</li>
+<li>In the <strong>Export Successful</strong> dialog box, click <strong>OK</strong>.</li>
+<li>Close the <strong>Exception Logger</strong> application.</li>
+<li>Open File Explorer and browse to the <strong>[Repository Root]\Labs\InteropLab\Data\Exceptions\Exceptions</strong> folder.</li>
+<li>Double-click <strong>Exceptions.docx</strong>, and then view the combined exception report in the Word document.</li>
+<li>Close Microsoft Word.</li>
+<li>Close File Explorer.</li>
+<li>Close Visual Studio.</li>
+</ol>
