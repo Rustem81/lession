@@ -1,0 +1,739 @@
+﻿<p>Creating Classes and Implementing Type-Safe Collections</p>
+<h2 id="module-adding-data-validation-and-type-safety-to-the-application">Module: Adding Data Validation and Type-Safety to the Application</h2>
+<h3 id="lab-setup">Lab Setup</h3>
+<h3 id="preparation-steps">Preparation Steps</h3>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h3 id="exercise-1-implementing-the-teacher-student-and-grade-structs-as-classes">Exercise 1: Implementing the Teacher, Student, and Grade Structs as Classes</h3>
+<h4 id="task-1-convert-the-grades-struct-into-a-class">Task 1: Convert the Grades struct into a class</h4>
+<ol>
+<li>Click <strong>Visual Studio</strong>.</li>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\OOPLab\Starter\Exercise 1</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>On the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 1a: Convert Grade into a class and define constructors</strong> task.</li>
+<li>In the code editor, below the comment, modify the <strong>public struct Grade</strong> declaration, replacing <strong>struct</strong> with <strong>class</strong>.
+<pre><code class="language-cs">public class Grade
+</code></pre>
+</li>
+<li>Click at the end of the code <strong>public string Comments { get; set; }</strong>, press Enter twice, and then type the following code:
+<pre><code class="language-cs">// Constructor to initialize the properties of a new Grade
+public Grade(int studentID, string assessmentDate, string subject, string
+assessment, string comments)
+{
+    StudentID = studentID;
+    AssessmentDate = assessmentDate;
+    SubjectName = subject;
+    Assessment = assessment;
+    Comments = comments;
+}
+
+// Default constructor
+public Grade()
+{
+    StudentID = 0;
+    AssessmentDate = DateTime.Now.ToString(&quot;d&quot;);
+    SubjectName = &quot;Math&quot;;
+    Assessment = &quot;A&quot;;
+    Comments = String.Empty;
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-2-convert-the-students-and-teachers-structs-into-classes">Task 2: Convert the Students and Teachers structs into classes</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 2a: Convert Student into a class, make the password property write-only, add the VerifyPassword method, and define constructors</strong> task.</li>
+<li>In the code editor, below the comment, modify the <strong>public struct Student</strong> declaration, replacing <strong>struct</strong> with <strong>class</strong>.
+<pre><code class="language-cs">public class Student
+</code></pre>
+</li>
+<li>Delete the following line of code from the <strong>Student</strong> class.
+<pre><code class="language-cs">public string Password {get; set;}
+</code></pre>
+</li>
+<li>Press Enter, and then type the following code:
+<pre><code class="language-cs">private string _password = Guid.NewGuid().ToString(); // Generate a random password by default
+
+public string Password
+{
+    set
+    {
+        _password = value;
+    }
+}
+
+public bool VerifyPassword(string pass)
+{
+    return (String.Compare(pass, _password) == 0);
+}
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> An application should not be able to read passwords; only set them and verify that a password is correct.</p>
+</blockquote>
+</li>
+<li>Click at the end of the code <strong>public string LastName { get; set; }</strong>, press Enter twice, and then type the following code:
+<pre><code class="language-cs">// Constructor to initialize the properties of a new Student
+public Student(int studentID, string userName, string password, string   firstName,   string lastName, int teacherID)
+{
+   StudentID = studentID;
+   UserName = userName;
+   Password = password;
+   FirstName = firstName;
+   LastName = lastName;
+   TeacherID = teacherID;
+}
+
+// Default constructor
+public Student()
+{
+   StudentID = 0;
+   UserName = String.Empty;
+   Password = String.Empty;
+   FirstName = String.Empty;
+   LastName = String.Empty;
+   TeacherID = 0;
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 2b: Convert Teacher into a class, make the password property write-only, add the VerifyPassword method, and define constructors</strong> task.</li>
+<li>In the code editor, below the comment, modify the <strong>public struct Teacher</strong> declaration, replacing <strong>struct</strong> with <strong>class</strong>.
+<pre><code class="language-cs">public class Teacher
+</code></pre>
+</li>
+<li>Delete the following line of code:
+<pre><code class="language-cs">public string Password {get; set;},
+</code></pre>
+</li>
+<li>Press Enter and then type the following code:
+<pre><code class="language-cs">private string _password = Guid.NewGuid().ToString(); // Generate a random password by default
+
+public string Password
+{
+    set
+    {
+        _password = value;
+    }
+}
+
+public bool VerifyPassword(string pass)
+{
+    return (String.Compare(pass, _password) == 0);
+}
+</code></pre>
+</li>
+<li>Click at the end of the code <strong>public string Class {get; set;}</strong>, press Enter twice, and then type the following code:
+<pre><code class="language-cs">// Constructor to initialize the properties of a new Teacher
+public Teacher(int teacherID, string userName, string password, string firstName, string lastName, string className)
+{
+    TeacherID = teacherID;
+    UserName = userName;
+    Password = password;
+    FirstName = firstName;
+    LastName = lastName;
+    Class = className;
+}
+
+// Default constructor
+public Teacher()
+{
+    TeacherID = 0;
+    UserName = String.Empty;
+    Password = String.Empty;
+    FirstName = String.Empty;
+    LastName = String.Empty;
+    Class = String.Empty;
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-use-the-verifypassword-method-to-verify-the-password-when-a-user-logs-in">Task 3: Use the VerifyPassword method to verify the password when a user logs in</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3a: Use the VerifyPassword method of the Teacher class to verify the teacher’s password</strong> task.</li>
+<li>In the code editor, below the comment, in the code for the teacher variable, modify the <strong>String.Compare(t.Password, password.Password) == 0</strong> code to look like the following code:
+<pre><code class="language-cs">t.VerifyPassword(password.Password)
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3b: Check whether teacher is null before examining the UserName property</strong> task.</li>
+<li>In the code editor, in the line below the comment, modify the <strong>if</strong> statement condition from <strong>!String.IsNullOrEmpty(teacher.UserName)</strong> to look like the following code:
+<pre><code class="language-cs">teacher != null &amp;&amp; !String.IsNullOrEmpty(teacher.UserName)
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3c: Use the VerifyPassword method of the Student class to verify the student’s password</strong> task.</li>
+<li>In the code editor, below the comment, in the code for the student variable, modify the <strong>String.Compare(s.Password, password.Password) == 0</strong> code to look like the following code:
+<pre><code class="language-cs">s.VerifyPassword(password.Password)
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3d: Check whether student is null before examining the UserName property</strong> task.</li>
+<li>In the code editor, in the line below the comment, modify the <strong>if</strong> statement condition from <strong>!String.IsNullOrEmpty(student.UserName)</strong> to look like the following code:
+<pre><code class="language-cs">student != null &amp;&amp; !String.IsNullOrEmpty(student.UserName)
+</code></pre>
+</li>
+</ol>
+<h4 id="task-4-build-and-run-the-application-and-verify-that-a-teacher-or-student-can-still-log-on">Task 4: Build and run the application, and verify that a teacher or student can still log on</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> Menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Username</strong> text box, type <strong>vallee</strong>.</li>
+<li>In the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the welcome screen appears, displaying the list of students.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>In the <strong>Username</strong> text box, delete the existing contents, type <strong>grubere</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the welcome screen appears, displaying the list of subjects and grades.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>Close the application.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Results:</strong> After completing this exercise, the <strong>Teacher</strong>, <strong>Student</strong>, and <strong>Grade</strong> structs will be implemented as classes and the <strong>VerifyPassword</strong> method will be called when a user logs on.</p>
+</blockquote>
+<h3 id="exercise-2-adding-data-validation-to-the-grade-class">Exercise 2: Adding Data Validation to the Grade Class</h3>
+<h4 id="task-1-create-a-list-of-valid-subject-names">Task 1: Create a list of valid subject names</h4>
+<ol>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\OOPLab\Starter\Exercise 2</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 1a: Define a List collection for holding the names of valid subjects</strong> task.<br />
+In the code editor, in the blank line below the comment, type the following code:
+<pre><code class="language-cs">public static List&lt;string&gt; Subjects;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 1b: Populate the list of valid subjects with sample data</strong> task.</li>
+<li>In the code editor, in the blank line below the comment, type the following code:
+<pre><code class="language-cs">Subjects = new List&lt;string&gt;() { &quot;Math&quot;, &quot;English&quot;, &quot;History&quot;, &quot;Geography&quot;,  &quot;Science&quot; };
+</code></pre>
+</li>
+</ol>
+<h4 id="task-2-add-validation-logic-to-the-grade-class-to-check-the-data-entered-by-the-user">Task 2: Add validation logic to the Grade class to check the data entered by the user</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 2a: Add validation to the AssessmentDate property</strong> task.</li>
+<li>In the code editor under comment, delete the <strong>public string AssessmentDate { get; set; }</strong> code, and then type the following code:
+<pre><code class="language-cs">private string _assessmentDate;
+
+public string AssessmentDate
+{
+    get
+    {
+        return _assessmentDate;
+    }
+
+    set
+    {
+        DateTime assessmentDate;
+
+        // Verify that the user has provided a valid date
+        if (DateTime.TryParse(value, out assessmentDate))
+        {
+            // Check that the date is no later than the current date
+            if (assessmentDate &gt; DateTime.Now)
+            {
+                // Throw an ArgumentOutOfRangeException if the date is after the current date
+                throw new ArgumentOutOfRangeException(&quot;AssessmentDate&quot;, &quot;Assessment date must be on or before the current date&quot;);
+            }
+
+            // If the date is valid, then save it in the appropriate format
+            _assessmentDate = assessmentDate.ToString(&quot;d&quot;);
+        }
+        else
+        {
+            // If the date is not in a valid format then throw an ArgumentException
+            throw new ArgumentException(&quot;AssessmentDate&quot;, &quot;Assessment date is not recognized&quot;);
+        }
+    }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 2b: Add validation to the SubjectName property</strong> task.</li>
+<li>In the code editor, below the comment, delete the <strong>public string SubjectName { get; set; }</strong> code, and then type the following code:
+<pre><code class="language-cs">private string _subjectName;
+
+public string SubjectName
+{
+    get
+    {
+        return _subjectName;
+    }
+
+    set
+    {
+        // Check that the specified subject is valid
+        if (DataSource.Subjects.Contains(value))
+        {
+            // If the subject is valid store the subject name
+            _subjectName = value;
+        }
+        else
+        {
+            // If the subject is not valid then throw an ArgumentException
+            throw new ArgumentException(&quot;SubjectName&quot;, &quot;Subject is not recognized&quot;);
+        }
+    }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 2c: Add validation to the Assessment property</strong> task.</li>
+<li>In the code editor, delete the <strong>public string Assessment { get; set; }</strong> code, and then type the following code:
+<pre><code class="language-cs">private string _assessment;
+
+public string Assessment
+{
+    get
+    {
+        return _assessment;
+    }
+
+    set
+    {
+        // Verify that the grade is in the range A+ to E-
+        // Use a regular expression: a single character in the range A-E at the start of the string followed by an optional + or – at the end of the string
+        Match matchGrade = Regex.Match(value, @&quot;[A-E][+-]?$&quot;);
+
+        if (matchGrade.Success)
+        {
+            _assessment = value;
+        }
+        else
+        {
+            // If the grade is not valid then throw an ArgumentOutOfRangeException
+            throw new ArgumentOutOfRangeException(&quot;Assessment&quot;, &quot;Assessment grade must be in the range of A+ to E-&quot;);
+        }
+    }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-add-a-unit-test-to-verify-that-the-validations-defined-for-the-grade-class-functions-as-expected">Task 3: Add a unit test to verify that the validations defined for the Grade class functions as expected</h4>
+<ol>
+<li>On the <strong>File</strong> menu, point to <strong>Add</strong>, and then click <strong>New Project</strong>.</li>
+<li>In the <strong>Add New Project</strong> dialog box, in the <strong>Installed</strong> templates list, expand <strong>Visual C#</strong>, click <strong>Test</strong>, and then in the <strong>Templates</strong> list, click <strong>Unit Test Project (.NET Framework)</strong>.
+<blockquote>
+<p><strong>Note:</strong> In the <strong>Add New Project</strong> window, make sure <strong>.NET Framework 4.7</strong> is selected on the top bar.</p>
+</blockquote>
+</li>
+<li>In the <strong>Name</strong> text box, type <strong>GradesTest</strong>, and then click <strong>OK</strong>.</li>
+<li>In <strong>Solution Explorer</strong>, right-click <strong>GradesTest</strong>, and click <strong>Add</strong> then click <strong>Reference</strong>.</li>
+<li>In the <strong>Reference Manager – GradesTest</strong> dialog box, expand <strong>Projects</strong> and then click <strong>Solution</strong>.</li>
+<li>Select the <strong>GradesPrototype</strong> check box, and then click <strong>OK</strong>.</li>
+<li>In the code editor, in the <strong>UnitTest1</strong> class, delete all of the existing code, and then type the following code:
+<pre><code class="language-cs">[TestInitialize]
+public void Init()
+{
+// Create the data source (needed to populate the Subjects collection)
+GradesPrototype.Data.DataSource.CreateData();
+}
+
+[TestMethod]
+public void TestValidGrade()
+{
+    GradesPrototype.Data.Grade grade = new GradesPrototype.Data.Grade(1, &quot;01/01/2012&quot;, &quot;Math&quot;, &quot;A-&quot;, &quot;Very good&quot;);
+    Assert.AreEqual(grade.AssessmentDate, &quot;01/01/2012&quot;);
+    Assert.AreEqual(grade.SubjectName, &quot;Math&quot;);
+    Assert.AreEqual(grade.Assessment, &quot;A-&quot;);
+}
+
+[TestMethod]
+[ExpectedException(typeof(ArgumentOutOfRangeException))]
+public void TestBadDate()
+{
+    // Attempt to create a grade with a date in the future
+    GradesPrototype.Data.Grade grade = new GradesPrototype.Data.Grade(1, &quot;1/1/2023&quot;, &quot;Math&quot;, &quot;A-&quot;, &quot;Very good&quot;);
+}
+
+[TestMethod]
+[ExpectedException(typeof(ArgumentException))]
+public void TestDateNotRecognized ()
+{
+    // Attempt to create a grade with an unrecognized date
+    GradesPrototype.Data.Grade grade = new GradesPrototype.Data.Grade(1, &quot;13/13/2012&quot;, &quot;Math&quot;, &quot;A-&quot;, &quot;Very good&quot;);
+}
+
+[TestMethod]
+[ExpectedException(typeof(ArgumentOutOfRangeException))]
+public void TestBadAssessment()
+{
+    // Attempt to create a grade with an assessment outside the range A+ to E-
+    GradesPrototype.Data.Grade grade = new GradesPrototype.Data.Grade(1, &quot;1/1/2012&quot;, &quot;Math&quot;, &quot;F-&quot;, &quot;Terrible&quot;);
+}
+
+[TestMethod]
+[ExpectedException(typeof(ArgumentException))]
+public void TestBadSubject()
+{
+    // Attempt to create a grade with an unrecognized subject
+    GradesPrototype.Data.Grade grade = new GradesPrototype.Data.Grade(1, &quot;1/1/2012&quot;, &quot;French&quot;, &quot;B-&quot;, &quot;OK&quot;);
+}
+</code></pre>
+</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Test</strong> menu, point to <strong>Run</strong>, and then click <strong>All Tests</strong>.</li>
+<li>In the <strong>Test Explorer</strong> window, verify that all the tests are passed.</li>
+<li>Close <strong>Test Explorer</strong>.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Results:</strong> After completing this exercise, the <strong>Grade</strong> class will contain validation logic.</p>
+</blockquote>
+<h3 id="exercise-3-displaying-students-in-name-order">Exercise 3: Displaying Students in Name Order</h3>
+<h4 id="task-1-run-the-application-and-verify-that-the-students-are-not-displayed-in-any-specific-order-when-logged-on-as-a-teacher">Task 1: Run the application and verify that the students are not displayed in any specific order when logged on as a teacher</h4>
+<ol>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\OOPLab\Starter\Exercise 3</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> Menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Username</strong> text box, type <strong>vallee</strong>.</li>
+<li>In the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the students are not displayed in any specific order.</li>
+<li>Close the application.</li>
+</ol>
+<p>#### Task 2: Implement the IComparable&lt;Student&gt; interface to enable comparison of students</p>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 2a: Specify that the Student class implements the IComparable&lt;Student&gt; interface</strong> task.</li>
+<li>In the code editor, click at the end of the <strong>public class Student</strong> declaration, and then type the following code:
+<pre><code class="language-cs">: IComparable&lt;Student&gt;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 2b: Compare Student objects based on their LastName and FirstName properties</strong> task.</li>
+<li>In the code editor, in the blank line below the comment, type the following code:
+<pre><code class="language-cs">// Compare Student objects based on their LastName and FirstName properties
+public int CompareTo(Student other)
+{
+    // Concatenate the LastName and FirstName of this student
+    string thisStudentsFullName = LastName + FirstName;
+
+    // Concatenate the LastName and FirstName of the &quot;other&quot; student
+    string otherStudentsFullName = other.LastName + other.FirstName;
+
+    // Use String.Compare to compare the concatenated names and return the result
+    return(String.Compare(thisStudentsFullName, otherStudentsFullName));
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-change-the-students-arraylist-collection-into-a-liststudent-collection">Task 3: Change the Students ArrayList collection into a List&lt;Student&gt; collection</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 3a: Change the Students collection into a List&lt;Student&gt;</strong> task.</li>
+<li>In the code editor, below the comment, modify the <strong>public static ArrayList Students;</strong> code to look like the following code:
+<pre><code class="language-cs">public static List&lt;Student&gt; Students;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 3b: Populate the List&lt;Student&gt; collection</strong> task.</li>
+<li>In the code editor, below the comment, modify the <strong>Students = new ArrayList()</strong> code to look like the following code:
+<pre><code class="language-cs">Students = new List&lt;Student&gt;()
+</code></pre>
+</li>
+</ol>
+<h4 id="task-4-sort-the-data-in-the-students-collection">Task 4: Sort the data in the Students collection</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 4a: Sort the data in the Students collection</strong> task.</li>
+<li>In the code editor, click at the end of the comment line, press Enter, and then type the following code:
+<pre><code class="language-cs">DataSource.Students.Sort();
+</code></pre>
+</li>
+</ol>
+<h4 id="task-5-verify-that-students-are-retrieved-and-displayed-in-the-order-of-their-first-name-and-last-name">Task 5: Verify that Students are retrieved and displayed in the order of their first name and last name</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Username</strong> text box, type <strong>vallee</strong>.</li>
+<li>In the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the students are displayed in the alphabetical order, based on their last names.</li>
+<li>Log off and then close the application.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Results:</strong> After completing this exercise, the application will display the students in the alphabetical order, based on last names, and then first names.</p>
+</blockquote>
+<h3 id="exercise-4-enabling-teachers-to-modify-class-and-grade-data">Exercise 4: Enabling Teachers to Modify Class and Grade Data</h3>
+<h4 id="task-1-change-the-teachers-and-grades-collections-to-be-generic-list-collections">Task 1: Change the Teachers and Grades collections to be generic List collections</h4>
+<ol>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\OOPLab\Starter\Exercise 4</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 1a: Change the Teachers collection into a generic List</strong> task.</li>
+<li>In the code editor, below the comment, modify the code <strong>public static ArrayList Teachers;</strong> to look like the following code:
+<pre><code class="language-cs">public static List&lt;Teacher&gt; Teachers;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 1b: Change the Grades collection into a generic List</strong> task.</li>
+<li>In the code editor, below the comment, modify the code <strong>public static ArrayList Grades;</strong> to look like the following code:
+<pre><code class="language-cs">public static List&lt;Grade&gt; Grades;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 1c: Populate the Teachers collection</strong> task.</li>
+<li>In the code editor, below the comment, modify the code <strong>Teachers = new ArrayList()</strong> to look like the following code:
+<pre><code class="language-cs">Teachers = new List&lt;Teacher&gt;()
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 1d: Populate the Grades collection</strong> task.</li>
+<li>In the code editor, below the comment, modify the code <strong>Grades = new ArrayList()</strong> to look like the following code:
+<pre><code class="language-cs">Grades = new List&lt;Grade&gt;()
+</code></pre>
+</li>
+</ol>
+<h4 id="task-2-add-the-enrollinclass-and-removefromclass-methods-for-the-teacher-class">Task 2: Add the EnrollInClass and RemoveFromClass methods for the Teacher class</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 2a: Enroll a student in the class for this teacher</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">public void EnrollInClass(Student student)
+{
+    // Verify that the student is not already enrolled in another class
+    if (student.TeacherID == 0)
+    {
+        // Set the TeacherID property of the student
+        student.TeacherID = TeacherID;
+     }
+     else
+     {
+        // If the student is already assigned to a class, throw an  ArgumentException
+        throw new ArgumentException(&quot;Student&quot;, &quot;Student is already assigned to a class&quot;);
+     }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 2b: Remove a student from the class for this teacher</strong> task.</li>
+<li>In the code editor, click at the end of the comment line, press Enter, and then type the following code:
+<pre><code class="language-cs">// Remove a student from the class for this teacher
+public void RemoveFromClass(Student student)
+{
+   // Verify that the student is actually assigned to the class for this teacher
+   if (student.TeacherID == TeacherID)
+   {
+       // Reset the TeacherID property of the student
+       student.TeacherID = 0;
+   }
+   else
+   {
+       // If the student is not assigned to the class for this teacher, throw an ArgumentException
+       throw new ArgumentException(&quot;Student&quot;, &quot;Student is not assigned to this class&quot;);
+   }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 2c: Add a grade to a student (the grade is already populated)</strong> task.</li>
+<li>In the code editor, click at the end of the comment line, press Enter, and then type the following code:
+<pre><code class="language-cs">// Add a grade to a student (the grade is already populated)
+public void AddGrade(Grade grade)
+{
+   // Verify that the grade does not belong to another student – the StudentID  should be zero
+   if (grade.StudentID == 0)
+   {
+      // Add the grade to the student’s record
+      grade.StudentID = StudentID;
+    }
+    else
+    {
+        // If the grade belongs to a different student, throw an ArgumentException
+        throw new ArgumentException(&quot;Grade&quot;, &quot;Grade belongs to a different  student&quot;);
+    }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-add-code-to-enroll-a-student-in-a-teachers-class">Task 3: Add code to enroll a student in a teacher’s class</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 3a: Enroll a student in the teacher’s class</strong> task.</li>
+<li>In the code editor, below the comment, click in the blank line in the <strong>Student_Click</strong> method, and then type the following code:
+<pre><code class="language-cs">try
+{
+    // Determine which student the user clicked
+    // the StudentID is held in the Tag property of the Button that the user    clicked
+    Button studentClicked = sender as Button;
+    int studentID = (int)studentClicked.Tag;
+
+    // Find this student in the Students collection
+    Student student = (from s in DataSource.Students
+                       where s.StudentID == studentID
+                       select s).First();
+
+    // Prompt the user to confirm that they wish to add this student to their class
+    string message = String.Format(&quot;Add {0} {1} to your class?&quot;, student.FirstName,  student.LastName);
+    MessageBoxResult reply = MessageBox.Show(message, &quot;Confirm&quot;, MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+    // If the user confirms, add the student to their class
+    if (reply == MessageBoxResult.Yes)
+    {
+        // Get the ID of the currently logged-on teacher
+        int teacherID = SessionContext.CurrentTeacher.TeacherID;
+
+        // Assign the student to this teacher’s class
+        SessionContext.CurrentTeacher.EnrollInClass(student);
+
+        // Refresh the display – the new assigned student should disappear from     the list of unassigned students
+        Refresh();
+     }
+}
+catch (Exception ex)
+{
+      MessageBox.Show(ex.Message, &quot;Error enrolling student&quot;, MessageBoxButton.OK, MessageBoxImage.Error);
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 3b: Refresh the display of unassigned students</strong> task.</li>
+<li>In the code editor, below the comment, click in the blank line in the <strong>Refresh</strong> method, and then type the following code:
+<pre><code class="language-cs">// Find all unassigned students - they have a TeacherID of 0
+var unassignedStudents = from s in DataSource.Students
+                         where s.TeacherID == 0
+                         select s;
+
+// If there are no unassigned students, then display the &quot;No unassigned students&quot; message
+// and hide the list of unassigned students
+if (unassignedStudents.Count() == 0)
+{
+    txtMessage.Visibility = Visibility.Visible;
+    list.Visibility = Visibility.Collapsed;
+}
+else
+{
+     // If there are unassigned students, hide the &quot;No unassigned students&quot; message
+     // and display the list of unassigned students
+     txtMessage.Visibility = Visibility.Collapsed;
+     list.Visibility = Visibility.Visible;
+
+      // Bind the ItemControl on the dialog to the list of unassigned students
+      // The names of the students will appear in the ItemsControl on the dialog
+      list.ItemsSource = unassignedStudents;
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 3c: Enroll a student in the teacher’s class</strong> task.</li>
+<li>In the code editor, below the comment, click in the blank line in the <strong>EnrollStudent_Click</strong> method, and then type the following code:
+<pre><code class="language-cs">// Use the AssignStudentDialog to display unassigned students and add them to the teacher’s class
+// All of the work is performed in the code behind the dialog
+AssignStudentDialog asd = new AssignStudentDialog();
+asd.ShowDialog();
+
+// Refresh the display to show any newly enrolled students
+Refresh();
+</code></pre>
+</li>
+</ol>
+<h4 id="task-4-add-code-to-enable-a-teacher-to-remove-the-student-from-the-assigned-class">Task 4: Add code to enable a teacher to remove the student from the assigned class</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 4a: Enable a teacher to remove a student from a class</strong> task.</li>
+<li>In the code editor, below the comment, click in the blank line in the <strong>Remove_Click</strong> method, and then type the following code:
+<pre><code class="language-cs">// If the user is not a teacher, do nothing (the button should not appear anyway)
+if (SessionContext.UserRole != Role.Teacher)
+{
+   return;
+}
+
+try
+{
+    // If the user is a teacher, ask the user to confirm that this student should be removed from their class
+    string message = String.Format(&quot;Remove {0} {1}&quot;, SessionContext.CurrentStudent.FirstName, SessionContext.CurrentStudent.LastName);
+    MessageBoxResult reply = MessageBox.Show(message, &quot;Confirm&quot;, MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+    // If the user confirms, then call the RemoveFromClass method of the current teacher to remove this student from their class
+    if (reply == MessageBoxResult.Yes)
+    {
+        SessionContext.CurrentTeacher.RemoveFromClass(SessionContext.CurrentStudent);
+
+        // Go back to the previous page – the student is no longer a member of the class for the current teacher
+        if (Back != null)
+        {
+             Back(sender, e);
+        }
+    }
+}
+catch (Exception ex)
+{
+    MessageBox.Show(ex.Message, &quot;Error removing student from class&quot;, MessageBoxButton.OK, MessageBoxImage.Error);
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-5-add-code-to-enable-a-teacher-to-add-a-grade-to-a-student">Task 5: Add code to enable a teacher to add a grade to a student</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 4: Task 5a: Enable a teacher to add a grade to a student</strong> task.</li>
+<li>In the code editor, below the comment, click in the blank line in the <strong>AddGrade_Click</strong> method, and then type the following code:</li>
+</ol>
+<pre><code class="language-cs">    // If the user is not a teacher, do nothing (the button should not appear anyway)
+    if (SessionContext.UserRole != Role.Teacher)
+    {
+        return;
+    }
+
+    try
+    {
+        // Use the GradeDialog to get the details of the assessment grade
+        GradeDialog gd = new GradeDialog();
+
+        // Display the form and get the details of the new grade
+        if (gd.ShowDialog().Value)
+        {
+            // When the user closes the form, retrieve the details of the assessment    grade from the form
+            // and use them to create a new Grade object
+            Grade newGrade = new Grade();
+            newGrade.AssessmentDate = gd.assessmentDate.SelectedDate.Value.ToString (&quot;d&quot;);
+            newGrade.SubjectName = gd.subject.SelectedValue.ToString();
+            newGrade.Assessment = gd.assessmentGrade.Text;
+            newGrade.Comments = gd.comments.Text;
+
+            // Save the grade to the list of grades
+            DataSource.Grades.Add(newGrade);
+
+            // Add the grade to the current student
+            SessionContext.CurrentStudent.AddGrade(newGrade);
+
+            // Refresh the display so that the new grade appears
+            Refresh();
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show(ex.Message, &quot;Error adding assessment grade&quot;, MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+</code></pre>
+<h4 id="task-6-run-the-application-and-verify-that-students-can-be-added-to-and-removed-from-classes-and-that-grades-can-be-added-to-students">Task 6: Run the application and verify that students can be added to and removed from classes, and that grades can be added to students</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Username</strong> text box, type <strong>vallee</strong>.</li>
+<li>In the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>Log on</strong>.</li>
+<li>Click <strong>New Student</strong>.</li>
+<li>In the <strong>First Name</strong> text box, type <strong>Darren</strong>.</li>
+<li>In the <strong>Last Name</strong> text box, type <strong>Parker</strong>.</li>
+<li>In the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>OK</strong>.</li>
+<li>Click <strong>Enroll Student</strong>.</li>
+<li>Verify that the <strong>Assign Student</strong> dialog box appears and that <strong>Darren Parker</strong> is in the list.</li>
+<li>Click <strong>Darren Parker</strong>.</li>
+<li>Verify that the <strong>Confirm</strong> message box appears, and then click <strong>Yes</strong>.</li>
+<li>In the <strong>Assign Student</strong> dialog box, verify that <strong>Darren Parker</strong> disappears and that the text <strong>No unassigned students</strong> is displayed.</li>
+<li>Click <strong>Close</strong>.</li>
+<li>Verify that <strong>Darren Parker</strong> is added to the student list.</li>
+<li>Click the student <strong>Kevin Liu</strong>.</li>
+<li>Click <strong>Remove Student</strong>.</li>
+<li>Verify that the <strong>Confirm</strong> message box appears, and then click <strong>Yes</strong>.</li>
+<li>Verify that <strong>Kevin Liu</strong> is removed from the student list.</li>
+<li>Click the student <strong>Darren Parker</strong>.</li>
+<li>Click <strong>Add Grade</strong>.</li>
+<li>Verify that the <strong>New Grade Details</strong> dialog box appears.</li>
+<li>Verify that the <strong>Date</strong> text box contains the current date.</li>
+<li>In the <strong>Subject</strong> list, click <strong>English</strong>.</li>
+<li>In the <strong>Assessment</strong> text box, type <strong>B</strong>.</li>
+<li>In the <strong>Comments</strong> text box, type <strong>Good</strong>, and then click <strong>OK</strong>.</li>
+<li>Verify that the grade information appears on the report card.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>In the <strong>Username</strong> text box, type <strong>parkerd</strong>.</li>
+<li>Click <strong>Log on</strong>.</li>
+<li>Verify that the <strong>Welcome Darren Parker</strong> screen is displayed, showing the
+report card and the previously added grade.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>Close the application.</li>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Results:</strong> After completing this exercise, the application will enable teachers to add and remove students from their classes, and to add grades to students.</p>
+</blockquote>
