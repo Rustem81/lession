@@ -1,0 +1,512 @@
+﻿<h1 id="developing-the-code-for-a-graphical-application">Developing the Code for a Graphical Application</h1>
+<h2 id="lab-writing-the-code-for-the-grades-prototype-application">Lab: Writing the Code for the Grades Prototype Application</h2>
+<h3 id="preparation-steps">Preparation Steps</h3>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h3 id="exercise-1-adding-navigation-logic-to-the-grades-prototype-application">Exercise 1: Adding Navigation Logic to the Grades Prototype Application</h3>
+<h4 id="task-1-examine-the-window-and-views-in-the-application">Task 1: Examine the window and views in the application</h4>
+<ol>
+<li>Click <strong>Visual Studio</strong>.</li>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\EventLab\Starter\Exercise 1</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>GradesPrototype</strong>, and then double-click <strong>MainWindow.xaml</strong>.</li>
+<li>Note that this is the main window for the application that will host the following views:
+<ul>
+<li><strong>LogonPage.xaml</strong></li>
+<li><strong>StudentProfile.xaml</strong></li>
+<li><strong>StudentsPage.xaml</strong></li>
+</ul>
+</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>Views</strong>, and then double-click <strong>LogonPage.xaml</strong>.</li>
+<li>Notice that this view contains text boxes for the username and password, a check box to identify the user as a teacher, and a button to log on to the application.</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>StudentProfile.xaml</strong>.</li>
+<li>Notice that this view contains a report card that currently displays a list of dummy grades. The view also contains a <strong>Back</strong> button and a blank space that will display the student’s name. This view is displayed when a student logs on or when a teacher views a student’s profile.</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>StudentsPage.xaml</strong>.</li>
+<li>Notice that this view contains the list of students in a particular class. This view is displayed when a teacher logs on. A teacher can click a student’s name and the <strong>Students Profile</strong> view will be displayed, containing the selected student’s data.</li>
+</ol>
+<h4 id="task-2-define-the-logonsuccess-event-and-add-dummy-code-for-the-logon_click-event">Task 2: Define the LogonSuccess event and add dummy code for the Logon_Click event</h4>
+<ol>
+<li>On the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, choose <strong>Entire Solution</strong> option from the list on the left side.</li>
+<li>Double-click the <strong>TODO: Exercise 1: Task 2a: Define the LogonSuccess event handler</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">public event EventHandler LogonSuccess;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 2b: Implement the Logon_Click event handler for the Logon button</strong> task.</li>
+<li>In the code editor, click in the blank line below the comments, and then type the following code:
+<pre><code class="language-cs">private void Logon_Click(object sender, RoutedEventArgs e)
+{
+    // Save the username and role (type of user) specified on the form in the   global context
+    SessionContext.UserName = username.Text;
+    SessionContext.UserRole = (bool)userrole.IsChecked ? Role.Teacher : Role.Student;
+
+    // If the role is Student, set the CurrentStudent property in the global    context to a dummy student; Eric Gruber
+    if (SessionContext.UserRole == Role.Student)
+    {
+        SessionContext.CurrentStudent = &quot;Eric Gruber&quot;;
+    }
+
+    // Raise the LogonSuccess event
+    if (LogonSuccess != null)
+    {
+        LogonSuccess(this, null);
+    }
+}
+</code></pre>
+</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>LogonPage.xaml</strong>.</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 1: Task 2c: Specify that the Logon button should raise the Logon_Click event handler in this view</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;Button Grid.Row=&quot;3&quot; Grid.ColumnSpan=&quot;2&quot; VerticalAlignment=&quot;Center&quot; HorizontalAlignment=&quot;Center&quot; Content=&quot;Log on&quot; FontSize=&quot;24&quot; \&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;Button Grid.Row=&quot;3&quot; Grid.ColumnSpan=&quot;2&quot; VerticalAlignment=&quot;Center&quot; HorizontalAlignment=&quot;Center&quot; Content=&quot;Log on&quot; FontSize=&quot;24&quot; Click=&quot;Logon_Click&quot; /&gt;
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-add-code-to-display-the-log-on-view">Task 3: Add code to display the Log On view</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3a: Display the logon view and hide the list of students and single student view</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>GotoLogon</strong> method, and then type the following code:
+<pre><code class="language-cs">// Display the logon view and hide the list of students and single student view
+logonPage.Visibility = Visibility.Visible;
+studentsPage.Visibility = Visibility.Collapsed;
+studentProfile.Visibility = Visibility.Collapsed;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 3b: Handle successful logon</strong> task.</li>
+<li>In the code editor, click in the blank line below the comments, and then type the following code:
+<pre><code class="language-cs">// Handle successful logon
+private void Logon_Success(object sender, EventArgs e)
+{
+    // Update the display and show the data for the logged on user
+    logonPage.Visibility = Visibility.Collapsed;
+    gridLoggedIn.Visibility = Visibility.Visible;
+    Refresh();
+}
+</code></pre>
+</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>MainWindow.xaml</strong>.</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 1: Task 3c: Catch the LogonSuccess event and call the Logon_Success event handler (to be created)</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;y:LogonPage x:Name=&quot;logonPage&quot;  Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;y:LogonPage x:Name=&quot;logonPage&quot; LogonSuccess=&quot;Logon_Success&quot; Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+</li>
+</ol>
+<h4 id="task-4-add-code-to-determine-the-type-of-user">Task 4: Add code to determine the type of user</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 4a: Update the display for the logged on user (student or teacher)</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>Refresh</strong> method, and then type the following code:
+<pre><code class="language-cs">switch (SessionContext.UserRole)
+{
+    case Role.Student:
+        // Display the student name in the banner at the top of the page
+        txtName.Text = string.Format(&quot;Welcome {0}&quot;, SessionContext.UserName);
+
+        // Display the details for the current student
+        GotoStudentProfile();
+        break;
+
+    case Role.Teacher:
+        // Display the teacher name in the banner at the top of the page
+        txtName.Text = string.Format(&quot;Welcome {0}&quot;, SessionContext.UserName);
+
+        // Display the list of students for the teacher
+        GotoStudentsPage();
+        break;
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 4b: Display the details for a single student</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>GotoStudentProfile</strong> method, and then type the following code:
+<pre><code class="language-cs">// Hide the list of students
+studentsPage.Visibility = Visibility.Collapsed;
+
+// Display the view for a single student
+studentProfile.Visibility = Visibility.Visible;
+studentProfile.Refresh();
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 4c: Display the list of students</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>GotoStudentsPage</strong> method, and then type the following code:
+<pre><code class="language-cs">// Hide the view for a single student (if it is visible)
+studentProfile.Visibility = Visibility.Collapsed;
+
+// Display the list of students
+studentsPage.Visibility = Visibility.Visible;
+studentsPage.Refresh();
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 4d: Display the details for the current student including the grades for the student</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>Refresh</strong> method, and then type the following code:
+<pre><code class="language-cs">// Parse the student name into the first name and last name by using a regular expression
+// The firstname is the initial string up to the first space character.
+// The lastname is the string after the space character
+Match matchNames = Regex.Match(SessionContext.CurrentStudent, @&quot;([^ ]+) ([^ ]+)&quot;);
+
+if (matchNames.Success)
+{
+    string firstName = matchNames.Groups[1].Value; // Indexing in the Groups collection starts at 1, not 0
+    string lastName = matchNames.Groups[2].Value;
+
+    // Display the first name and last name in the TextBlock controls in the studentName StackPanel
+    ((TextBlock)studentName.Children[0]).Text = firstName;
+    ((TextBlock)studentName.Children[1]).Text = lastName;
+}
+
+// If the current user is a student, hide the Back button
+// (only applicable to teachers who can use the Back button to return to the list of students)
+if (SessionContext.UserRole == Role.Student)
+{
+    btnBack.Visibility = Visibility.Hidden;
+}
+else
+{
+    btnBack.Visibility = Visibility.Visible;
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-5-handle-the-student_click-event">Task 5: Handle the Student_Click event</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 5a: Handle the click event for a student</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>Student_Click</strong> method, and then type the following code:
+<pre><code class="language-cs">Button itemClicked = sender as Button;
+if (itemClicked != null)
+{
+    // Find out which student was clicked - the Tag property of the button  contains the name
+    string studentName = (string)itemClicked.Tag;
+    if (StudentSelected != null)
+    {
+        // Raise the StudentSelected event (handled by MainWindow) to display the   details for this student
+        StudentSelected(sender, new StudentEventArgs(studentName));
+    }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 1: Task 5b: Handle the StudentSelected event when the user clicks a student on the Students page</strong> task.</li>
+<li>In the code editor, click in the blank line in the <strong>studentsPage_StudentSelected</strong> method, and then type the following code:
+<pre><code class="language-cs">SessionContext.CurrentStudent = e.Child;
+GotoStudentProfile();
+</code></pre>
+</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>MainWindow.xaml</strong>.</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 1: Task 5c: Catch the StudentSelected event and call the studentsPage_StudentSelected event handler</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;y:StudentsPage x:Name=&quot;studentsPage&quot; Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;y:StudentsPage x:Name=&quot;studentsPage&quot; StudentSelected=&quot;studentsPage_StudentSelected&quot; Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+</li>
+</ol>
+<h4 id="task-6-build-and-test-the-application">Task 6: Build and test the application</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>When the application loads, in the <strong>Username</strong> text box, type <strong>vallee</strong>, and in the <strong>Password</strong> text box, type <strong>password</strong>.</li>
+<li>Select the <strong>Teacher</strong> check box, and then click <strong>Log on</strong>.</li>
+<li>Verify that the application displays the <strong>StudentPage</strong> view.</li>
+<li>Click the student <strong>Kevin Liu</strong> and verify that the application displays the <strong>StudentProfile</strong> view.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>In the <strong>Username</strong> text box, delete the existing contents, and then type <strong>grubere</strong>.</li>
+<li>Clear the <strong>Teacher</strong> check box, and then click <strong>Log on</strong>.</li>
+<li>Verify that the application displays the student profile page for <strong>Eric Gruber</strong>.</li>
+<li>Close the application.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Result:</strong> After completing this exercise, you should have updated the <strong>Grades Prototype</strong> application to respond to user events and move among the application views appropriately.</p>
+</blockquote>
+<h3 id="exercise-2-creating-data-types-to-store-user-and-grade-information">Exercise 2: Creating Data Types to Store User and Grade Information</h3>
+<h4 id="task-1-define-basic-structs-for-holding-grade-student-and-teacher-information">Task 1: Define basic structs for holding Grade, Student, and Teacher information</h4>
+<ol>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\EventLab\Starter\Exercise 2</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>On the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 1a: Create the Grade struct</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">public struct Grade
+{
+    public int StudentID { get; set; }
+    public string AssessmentDate { get; set; }
+    public string SubjectName { get; set; }
+    public string Assessment { get; set; }
+    public string Comments { get; set; }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 1b: Create the Student struct</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">public struct Student
+{
+    public int StudentID { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public int TeacherID { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 2: Task 1c: Create the Teacher struct</strong> task.</li>
+<li>In the code editor, click at the end of the comment line, press Enter, and then type the following code:
+<pre><code class="language-cs">public struct Teacher
+{
+    public int TeacherID { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Class { get; set; }
+}
+</code></pre>
+</li>
+</ol>
+<h4 id="task-2-examine-the-dummy-data-source-used-to-populate-the-collections">Task 2: Examine the dummy data source used to populate the collections</h4>
+<ol>
+<li>In <strong>Solution Explorer</strong>, expand <strong>GradesPrototype</strong>, expand <strong>Data</strong>, and then double-click <strong>DataSource.cs</strong>.</li>
+<li>In the code editor, expand the region <strong>Sample Data</strong>, and then locate the method <strong>CreateData</strong>.</li>
+<li>Note how the <strong>Teachers ArrayList</strong> is populated with <strong>Teacher</strong> data, each containing <strong>TeacherID</strong>, <strong>UserName</strong>, <strong>Password</strong>, <strong>FirstName</strong>, <strong>LastName</strong>, and <strong>Class</strong> fields.</li>
+<li>Note how the <strong>Students ArrayList</strong> is populated with <strong>Student</strong> data, each containing <strong>StudentID</strong>, <strong>UserName</strong>, <strong>Password</strong>, <strong>TeacherID</strong>, <strong>FirstName</strong>, and <strong>LastName</strong> fields.</li>
+<li>Note how the <strong>Grades ArrayList</strong> is populated with <strong>Grade</strong> data, each containing <strong>StudentID</strong>, <strong>AssessmentDate</strong>, <strong>SubjectName</strong>, <strong>Assessment</strong>, and <strong>Comments</strong> fields.</li>
+<li>On the <strong>File menu</strong>, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Result:</strong> After completing this exercise, the application will contain structs for the teacher, student, and grade types.</p>
+</blockquote>
+<h3 id="exercise-3-displaying-user-and-grade-information">Exercise 3: Displaying User and Grade Information</h3>
+<h4 id="task-1-add-the-logonfailed-event">Task 1: Add the LogonFailed event</h4>
+<ol>
+<li>In <strong>Visual Studio</strong>, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to <strong>[Repository Root]\Labs\EventLab\Starter\Exercise 3</strong>, click <strong>GradesPrototype.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 1a: Define LogonFailed event</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">public event EventHandler LogonFailed;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 1b: Validate the username and password against the Users collection in the MainWindow window</strong> task.</li>
+<li>In the code editor, in the <strong>Logon_Click</strong> method, click in the blank line, and then type the following code:
+<pre><code class="language-cs">// Find the user in the list of possible users - first check whether the user is a  teacher
+var teacher = (from Teacher t in DataSource.Teachers
+               where String.Compare(t.UserName, username.Text) == 0 &amp;&amp;
+                     String.Compare(t.Password, password.Password) == 0
+               select t).FirstOrDefault();
+
+// If the UserName of the user retrieved by using LINQ is non-empty then the user is a teacher
+if (!String.IsNullOrEmpty(teacher.UserName))
+{
+    // Save the UserID and Role (teacher or student) and UserName in the global context
+    SessionContext.UserID = teacher.TeacherID;
+    SessionContext.UserRole = Role.Teacher;
+    SessionContext.UserName = teacher.UserName;
+    SessionContext.CurrentTeacher = teacher;
+
+    // Raise the LogonSuccess event and finish
+    LogonSuccess(this, null);
+    return;
+}
+// If the user is not a teacher, check whether the username and password match those of a student
+else
+{
+    var student = (from Student s in DataSource.Students
+                   where String.Compare(s.UserName, username.Text) == 0 &amp;&amp;
+                         String.Compare(s.Password, password.Password) == 0
+                   select s).FirstOrDefault();
+
+    // If the UserName of the user retrieved by using LINQ is non-empty then the user is a student
+    if (!String.IsNullOrEmpty(student.UserName))
+    {
+        // Save the details of the student in the global context
+        SessionContext.UserID = student.StudentID;
+        SessionContext.UserRole = Role.Student;
+        SessionContext.UserName = student.UserName;
+        SessionContext.CurrentStudent = student;
+
+        // Raise the LogonSuccess event and finish
+        LogonSuccess(this, null);
+        return;
+    }
+}
+
+// If the credentials do not match those for a Teacher or for a Student then they must be invalid
+// Raise the LogonFailed event
+LogonFailed(this, null);
+</code></pre>
+</li>
+</ol>
+<h4 id="task-2-add-the-logon_failed-event-handler">Task 2: Add the Logon_Failed event handler</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 2a: Handle logon failure</strong> task.</li>
+<li>In the code editor, click in the blank line below the comments, and then type the following code:
+<pre><code class="language-cs">private void Logon_Failed(object sender, EventArgs e)
+{
+    // Display an error message. The user must try again
+    MessageBox.Show(&quot;Invalid Username or Password&quot;, &quot;Logon Failed&quot;, MessageBoxButton.OK, MessageBoxImage.Error);
+}
+</code></pre>
+</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>MainWindow.xaml</strong>.</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 3: Task 2b: Connect the LogonFailed event of the logonPage view to the Logon_Failed method in MainWindow.xaml.cs</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;y:LogonPage x:Name=&quot;logonPage&quot; LogonSuccess=&quot;Logon_Success&quot; Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;y:LogonPage x:Name=&quot;logonPage&quot; LogonSuccess=&quot;Logon_Success&quot; LogonFailed=&quot;Logon_Failed&quot; Visibility=&quot;Collapsed&quot; /&gt;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 2c: Display the student name in the banner at the top of the page</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">// Display the student name in the banner at the top of the page
+txtName.Text = string.Format(&quot;Welcome {0} {1}&quot;, SessionContext.CurrentStudent.FirstName, SessionContext.CurrentStudent.LastName);
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 2d: Display the teacher name in the banner at the top of the page</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">// Display the teacher name in the banner at the top of the page
+txtName.Text = string.Format(&quot;Welcome {0} {1}&quot;, SessionContext.CurrentTeacher.FirstName, SessionContext.CurrentTeacher.LastName);
+</code></pre>
+</li>
+</ol>
+<h4 id="task-3-display-the-students-for-the-current-teacher">Task 3: Display the students for the current teacher</h4>
+<ol>
+<li>In <strong>Solution Explorer</strong>, expand <strong>Views</strong>, and then double-click <strong>StudentsPage.xaml</strong>.</li>
+<li>In the XAML editor, locate the <strong>ItemsControl</strong> named <strong>list</strong> and note how data binding is used to display the name of each student.
+<blockquote>
+<p><strong>Note:</strong> DataBinding is also used to retrieve the StudentID of a student. This binding is used when a user clicks on a student on the <strong>Student Page</strong> list to identify the student whose data is to be displayed in the <strong>Student Profile</strong> page.</p>
+</blockquote>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 3a: Display students for the current teacher (held in SessionContext.CurrentTeacher)</strong> task.</li>
+<li>In the code editor, in the <strong>Refresh</strong> method, click in the blank line, and then type the following code:
+<pre><code class="language-cs">// Find students for the current teacher
+ArrayList students = new ArrayList();
+
+foreach (Student student in DataSource.Students)
+{
+    if (student.TeacherID == SessionContext.CurrentTeacher.TeacherID)
+    {
+        students.Add(student);
+    }
+}
+
+// Bind the collection to the list item template
+list.ItemsSource = students;
+
+// Display the class name
+txtClass.Text = String.Format(&quot;Class {0}&quot;, SessionContext.CurrentTeacher.Class);
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 3b: If the user clicks on a student, display the details for that student</strong> task.</li>
+<li>In the code editor, in the <strong>Student_Click</strong> method, click in the blank line, and then type the following code:
+<pre><code class="language-cs">Button itemClicked = sender as Button;
+
+if (itemClicked != null)
+{
+    // Find out which student was clicked
+    int studentID = (int)itemClicked.Tag;
+
+    if (StudentSelected !=null)
+    {
+        // Find the details of the student by examining the DataContext of the Button
+        Student student = (Student)itemClicked.DataContext;
+
+        // Raise the StudentSelected event (handled by MainWindow to display the details for this student
+        StudentSelected(sender, new StudentEventArgs(student));
+    }
+}
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 3c: Set the current student in the global context to the student specified in the StudentEventArgs parameter</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">SessionContext.CurrentStudent = e.Child;
+</code></pre>
+</li>
+</ol>
+<h4 id="task-4-set-the-datacontext-for-the-page">Task 4: Set the DataContext for the page</h4>
+<ol>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 4a: Display the details for the current student (held in SessionContext.CurrentStudent)</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">// Bind the studentName StackPanel to display the details of the student in the TextBlocks in this panel
+studentName.DataContext = SessionContext.CurrentStudent;
+
+// If the current user is a student, hide the Back button
+// (only applicable to teachers who can use the Back button to return to the list of students)
+if (SessionContext.UserRole == Role.Student)
+{
+    btnBack.Visibility = Visibility.Hidden;
+}
+else
+{
+    btnBack.Visibility = Visibility.Visible;
+}
+</code></pre>
+</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>Views</strong> and then double-click <strong>StudentProfile.xaml</strong>.</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 3: Task 4b: Bind the firstName TextBlock to the FirstName property of the DataContext for this control</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;TextBlock x:Name=&quot;firstName&quot; FontSize=&quot;16&quot; /&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;TextBlock x:Name=&quot;firstName&quot; Text=&quot;{Binding FirstName}&quot; FontSize=&quot;16&quot; /&gt;
+</code></pre>
+</li>
+<li>In the XAML editor, locate the task <strong>TODO: Exercise 3: Task 4c: Bind the lastName TextBlock to the LastName property of the DataContext for this control</strong> task.</li>
+<li>In the line below the comment, modify the XAML markup
+<pre><code class="language-xml">&lt;TextBlock x:Name=&quot;lastName&quot; FontSize=&quot;16&quot;/&gt;
+</code></pre>
+to look like the following markup:
+<pre><code class="language-xml">&lt;TextBlock x:Name=&quot;lastName&quot; Text=&quot;{Binding LastName}&quot; FontSize=&quot;16&quot;  /&gt;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: Exercise 3: Task 4d: Create a list of the grades for the student and display this list on the page</strong> task.</li>
+<li>In the code editor, click at the end of the comment line, press Enter, and then type the following code:
+<pre><code class="language-cs">// Find all the grades for the student
+ArrayList grades = new ArrayList();
+
+foreach (Grade grade in DataSource.Grades)
+{
+    if (grade.StudentID == SessionContext.CurrentStudent.StudentID)
+    {
+        grades.Add(grade);
+    }
+}
+
+// Display the grades in the studentGrades ItemsControl by using databinding
+studentGrades.ItemsSource = grades;
+</code></pre>
+</li>
+</ol>
+<h4 id="task-5-build-and-test-the-application">Task 5: Build and test the application</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>When the application loads, in the <strong>Username</strong> text box, type <strong>parkerd</strong>, in the <strong>Password</strong> text box, type <strong>password</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the <strong>Logon Failed</strong> dialog box appears, and then click <strong>OK</strong>.</li>
+<li>In the <strong>Username</strong> text box, delete the existing contents, type <strong>vallee</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the <strong>Students</strong> page appears, displaying a list of students.</li>
+<li>Click the student <strong>Kevin Liu</strong> and verify that the <strong>Student Profile</strong> page is displayed.</li>
+<li>Click <strong>Log off</strong>.</li>
+<li>In the <strong>Username</strong> text box, delete the existing contents, type <strong>grubere</strong>, and then click <strong>Log on</strong>.</li>
+<li>Verify that the <strong>Student Profile</strong> page for <strong>Eric Gruber</strong> is displayed.</li>
+<li>Close the application.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<blockquote>
+<p><strong>Result:</strong> After completing this exercise, only valid users will be able to log on to the application and they will see only data appropriate to their role.</p>
+</blockquote>
