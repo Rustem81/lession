@@ -27,9 +27,11 @@ namespace GradesPrototype
         public MainWindow()
         {
             InitializeComponent();
-            DataSource.CreateData();
 
-            // TODO: Exercise 3: Task 4a: Sort the data in the Students collection
+
+            // TODO: Exercise 3: Task 4a: Sort the data in the Students collection DataSource.CreateData();
+            DataSource.CreateData();
+            DataSource.Students.Sort();
             GotoLogon();
         }
 
