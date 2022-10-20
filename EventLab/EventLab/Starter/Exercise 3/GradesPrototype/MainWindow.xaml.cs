@@ -77,6 +77,11 @@ namespace GradesPrototype
 
         // TODO: Exercise 3: Task 2a: Handle logon failure
         // Display an error message. The user must try again
+        private void Logon_Failed(object sender, EventArgs e)
+        {
+            // Display an error message. The user must try again
+            MessageBox.Show("Invalid Username or Password", "Logon Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
 
 
         // Handle logoff
@@ -99,7 +104,7 @@ namespace GradesPrototype
         private void studentsPage_StudentSelected(object sender, StudentEventArgs e)
         {
             // TODO: Exercise 3: Task 3c: Set the current student in the global context to the student specified in the StudentEventArgs parameter
-            
+            SessionContext.CurrentStudent = e.Child;
             // Display the details of the current student
             GotoStudentProfile();
         }
@@ -115,15 +120,18 @@ namespace GradesPrototype
             {
                 case Role.Student:
                     // TODO: Exercise 3: Task 2c: Display the student name in the banner at the top of the page
+                    // Display the student name in the banner at the top of the page
+                    txtName.Text = string.Format("Welcome {0} {1}", SessionContext.CurrentStudent.FirstName, SessionContext.CurrentStudent.LastName);
                     
-                    // Display the details for the current student
+                   
                     GotoStudentProfile();
                     break;
 
                 case Role.Teacher:
                     // TODO: Exercise 3: Task 2d: Display the teacher name in the banner at the top of the page
+                    // Display the teacher name in the banner at the top of the page
+                    txtName.Text = string.Format("Welcome {0} {1}", SessionContext.CurrentTeacher.FirstName, SessionContext.CurrentTeacher.LastName);
                     
-                    // Display the list of students for the teacher
                     GotoStudentsPage();                    
                     break;
             }

@@ -33,7 +33,22 @@ namespace GradesPrototype.Views
         // TODO: Exercise 3: Task 3a: Display students for the current teacher (held in SessionContext.CurrentTeacher )
         public void Refresh()
         {
+            // Find students for the current teacher
+            ArrayList students = new ArrayList();
 
+            foreach (Student student in DataSource.Students)
+            {
+                if (student.TeacherID == SessionContext.CurrentTeacher.TeacherID)
+                {
+                    students.Add(student);
+                }
+            }
+
+            // Bind the collection to the list item template
+            list.ItemsSource = students;
+
+            // Display the class name
+            txtClass.Text = String.Format("Class {0}", SessionContext.CurrentTeacher.Class);
         }
         #endregion
 
@@ -47,7 +62,22 @@ namespace GradesPrototype.Views
         // TODO: Exercise 3: Task 3b: If the user clicks on a student, display the details for that student
         private void Student_Click(object sender, RoutedEventArgs e)
         {
+            Button itemClicked = sender as Button;
 
+            if (itemClicked != null)
+            {
+                // Find out which student was clicked
+                int studentID = (int)itemClicked.Tag;
+
+                if (StudentSelected != null)
+                {
+                    // Find the details of the student by examining the DataContext of the Button
+                    Student student = (Student)itemClicked.DataContext;
+
+                    // Raise the StudentSelected event (handled by MainWindow to display the details for this student
+                    StudentSelected(sender, new StudentEventArgs(student));
+                }
+            }
         }
         #endregion
     }

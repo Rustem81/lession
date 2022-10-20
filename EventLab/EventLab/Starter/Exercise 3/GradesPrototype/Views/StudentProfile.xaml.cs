@@ -54,8 +54,33 @@ namespace GradesPrototype.Views
         public void Refresh()
         {
             // TODO: Exercise 3: Task 4a: Display the details for the current student (held in SessionContext.CurrentStudent) 
+            // Bind the studentName StackPanel to display the details of the student in the TextBlocks in this panel
+            studentName.DataContext = SessionContext.CurrentStudent;
 
+            // If the current user is a student, hide the Back button
+            // (only applicable to teachers who can use the Back button to return to the list of students)
+            if (SessionContext.UserRole == Role.Student)
+            {
+                btnBack.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                btnBack.Visibility = Visibility.Visible;
+            }
             // TODO: Exercise 3: Task 4d: Create a list of the grades for the student and display this list on the page
+            // Find all the grades for the student
+            ArrayList grades = new ArrayList();
+
+            foreach (Grade grade in DataSource.Grades)
+            {
+                if (grade.StudentID == SessionContext.CurrentStudent.StudentID)
+                {
+                    grades.Add(grade);
+                }
+            }
+
+            // Display the grades in the studentGrades ItemsControl by using databinding
+            studentGrades.ItemsSource = grades;
         }
     }
 }
