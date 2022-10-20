@@ -1,12 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradesPrototype", "GradesPrototype\GradesPrototype.csproj", "{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CF5970A9-DE70-4FCD-B20F-2864474C7B72}"
 	ProjectSection(SolutionItems) = preProject
 		TODO Exercise 2 Task 3.txt = TODO Exercise 2 Task 3.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradesTest", "GradesTest\GradesTest.csproj", "{01D548CA-2D31-4A3A-A9F4-B75641FC0A89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,8 +22,15 @@ Global
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E5FC82F-F511-4FA3-9733-5AC0A4113CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01D548CA-2D31-4A3A-A9F4-B75641FC0A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01D548CA-2D31-4A3A-A9F4-B75641FC0A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01D548CA-2D31-4A3A-A9F4-B75641FC0A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01D548CA-2D31-4A3A-A9F4-B75641FC0A89}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA656C0C-FD9A-47F9-928D-95D188A6A112}
 	EndGlobalSection
 EndGlobal
