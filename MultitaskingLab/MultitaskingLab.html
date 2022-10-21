@@ -1,0 +1,81 @@
+﻿<h1 id="improving-application-performance-and-responsiveness">Improving Application Performance and Responsiveness</h1>
+<h2 id="performing-operations-asynchronously">Performing Operations Asynchronously</h2>
+<h3 id="using-the-task-parallel-library-to-invoke-apm-operations">Using the Task Parallel Library to Invoke APM Operations</h3>
+<h4 id="preparation-steps">Preparation Steps</h4>
+<ol>
+<li>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</li>
+<li>Navigate to <strong>[Repository Root]\Labs\MultitaskingLab\Starter\Starter</strong>, and then open the <strong>APMTasks.sln</strong> file.
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="steps">Steps</h4>
+<ol>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the text box, type <strong><a href="http://www.fourthcoffee.com">http://www.fourthcoffee.com</a></strong>, and then click <strong>Check URL</strong>.<br />
+Notice that the label displays the message <strong>The URL returned the following status code: OK</strong>.</li>
+<li>Close the <strong>MainWindow</strong> window.</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>MainWindow.xaml</strong>, and then double-click <strong>MainWindow.xaml.cs</strong>.</li>
+<li>Review the code in the <strong>MainWindow</strong> class:
+<ul>
+<li>Notice that the <strong>btnCheckUrl_Click</strong> method creates an <strong>HttpWebRequest</strong> object and then calls the <strong>BeginGetResponse</strong> method.</li>
+<li>Notice that the <strong>BeginGetResponse</strong> method specifies the <strong>ResponseCallback</strong> method as an asynchronous callback method.</li>
+<li>Notice that the <strong>ResponseCallback</strong> method calls the <strong>HttpWebResponse.EndGetResponse</strong> method to get the result of the web request and then updates the UI.</li>
+</ul>
+</li>
+<li>Delete the <strong>ResponseCallback</strong> method.</li>
+<li>Modify the <strong>btnCheckUrl_Click</strong> method declaration to include the <strong>async</strong> modifier as follows:
+<pre><code class="language-cs">private async void btnCheckUrl_Click(object sender, RoutedEventArgs e)
+</code></pre>
+</li>
+<li>In the <strong>btnCheckUrl_Click</strong> method, delete the following line of code:
+<pre><code class="language-cs">request.BeginGetResponse(new AsyncCallback(ResponseCallback), request);
+</code></pre>
+</li>
+<li>Add the following code in place of the line you just deleted:
+<pre><code class="language-cs">HttpWebResponse response = await Task&lt;WebResponse&gt;.Factory.FromAsync(request.BeginGetResponse, request.EndGetResponse, request) as HttpWebResponse;
+lblResult.Content = String.Format(&quot;The URL returned the following status code: {0}&quot;, response.StatusCode);
+</code></pre>
+</li>
+<li>Notice that the <strong>MainWindow</strong> class is now far more simple and concise.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the text box, type <strong><a href="http://www.fourthcoffee.com">http://www.fourthcoffee.com</a></strong>, and then click <strong>Check URL</strong>.</li>
+<li>Notice that the label displays the message <strong>The URL returned the following status code: OK</strong>.</li>
+<li>Notice that the application works in exactly the same way as before.</li>
+<li>Close the <strong>MainWindow</strong> window, and then close Visual Studio.</li>
+</ol>
+<h2 id="synchronizing-concurrent-access-to-data">Synchronizing Concurrent Access to Data</h2>
+<h3 id="using-lock-statements">Using Lock Statements</h3>
+<h4 id="preparation-steps-1">Preparation Steps</h4>
+<ol>
+<li>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</li>
+<li>Navigate to <strong>[Repository Root]\Labs\MultitaskingLab\Starter\Starter</strong>, and then open the <strong>Locking.sln</strong> file.
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="steps-1">Steps</h4>
+<ol>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>Coffee.cs</strong>.</li>
+<li>Review the <strong>Coffee</strong> class, paying particular attention to the <strong>MakeCoffees</strong> method.</li>
+<li>Notice how the <strong>MakeCoffees</strong> method uses a <strong>lock</strong> statement to prevent concurrent access to the critical code.</li>
+<li>In <strong>Solution Explorer</strong>, double-click <strong>Program.cs</strong>.</li>
+<li>In the <strong>Program</strong> class, review the <strong>Main</strong> method.</li>
+<li>Notice how the <strong>Main</strong> method uses a <strong>Parallel.For</strong> loop to simultaneously place 100 orders for between one and 100 coffees.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Debugging</strong>.</li>
+<li>Review the console window output and notice that the application keeps track of stock levels effectively.</li>
+<li>To close the console window, press Enter.</li>
+<li>In the <strong>Coffee</strong> class, comment out the following line of code:
+<pre><code class="language-cs">lock (coffeeLock)
+</code></pre>
+</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Debugging</strong>.</li>
+<li>Notice that the application throws an exception with the message <strong>Stock cannot be negative!</strong></li>
+<li>This is due to concurrent access to the critical code section in the <strong>MakeCoffees</strong> method.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Stop Debugging</strong>.</li>
+<li>Close Visual Studio.</li>
+</ol>
