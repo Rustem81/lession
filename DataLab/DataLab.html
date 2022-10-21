@@ -1,0 +1,124 @@
+﻿<h1 id="accessing-a-database">Accessing a Database</h1>
+<h2 id="creating-and-using-entity-data-models">Creating and Using Entity Data Models</h2>
+<h4 id="preparation-steps">Preparation Steps</h4>
+<ol>
+<li>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</li>
+</ol>
+<h4 id="steps">Steps</h4>
+<ol>
+<li>Navigate to the <strong>[Repository Root]\Labs\DataLab\Databases</strong> folder, and then double-click <strong>SetupFourthCoffeeDB.cmd</strong>.
+<blockquote>
+<p><strong>Note:</strong> If a Windows protected your PC dialog appears, click <strong>More info</strong> and then click <strong>Run Anyway</strong>.</p>
+</blockquote>
+</li>
+<li>Locate <strong>[Repository Root]\Labs\DataLab\Databases</strong> folder again, right-click <strong>FourthCoffee.sql</strong>, point to <strong>Open With</strong>, click <strong>Microsoft Visual Studio Version Selector</strong>, then click <strong>Open</strong>.</li>
+<li>Review the SQL query.</li>
+<li>On the <strong>File</strong> menu, click <strong>Close</strong>.</li>
+<li>On the <strong>File</strong> menu, point to <strong>New</strong>, and then click <strong>Project</strong>.</li>
+<li>In the <strong>New Project</strong> dialog box, expand <strong>Templates</strong>, click <strong>Visual C#</strong>, and then in the <strong>Template</strong> list, click <strong>Console App(.NET Framework)</strong>.</li>
+<li>In the <strong>Name</strong> text box, type <strong>FourthCoffee.Employees</strong>, in the <strong>Location</strong> text box, type <strong>[Repository Root]\Labs\DataLab\Demo1\Starter</strong>, and then click <strong>OK</strong>.</li>
+<li>In <strong>Solution Explorer</strong>, right-click <strong>FourthCoffee.Employees</strong>, point to <strong>Add</strong>, and then click <strong>New Item</strong>.</li>
+<li>In the <strong>Add New Item – FourthCoffee.Employees</strong> dialog box, click <strong>ADO.NET Entity Data Model</strong>, in the <strong>Name</strong> text box, type <strong>FourthCoffeeEmployeesModel</strong>, and then click <strong>Add</strong>.</li>
+<li>In <strong>Entity Data Model Wizard</strong>, on the <strong>Choose Model Contents</strong> page, click <strong>EF Designer from database</strong>, and then click <strong>Next</strong>.</li>
+<li>On the <strong>Choose Your Data Connection</strong> page, click <strong>New Connection</strong>.</li>
+<li>On the <strong>Choose Data Source page</strong>, Select <strong>Microsoft SQL Server</strong> and then click <strong>OK</strong>.</li>
+<li>In the <strong>Server name</strong> text box, type <strong>(localdb)\MSSQLLocalDB</strong>, in the <strong>Select or enter a database name</strong> list, click <strong>FourthCoffee</strong>, and then click <strong>OK</strong>.</li>
+<li>In <strong>Entity Data Model Wizard</strong>, on the <strong>Choose Your Data Connection</strong> page, click <strong>Next</strong>.</li>
+<li>In the <strong>Choose Your Version</strong> page, choose <strong>Entity Framework 6.x</strong> and then click <strong>Next</strong>.</li>
+<li>On the <strong>Choose Your Database Objects and Settings</strong> page, expand <strong>Tables</strong>, expand <strong>dbo</strong>, select <strong>Branches</strong>, <strong>Employees</strong>, and <strong>JobTitles</strong>, and then click <strong>Finish</strong>.</li>
+<li>If a <strong>Security Warning</strong> dialog box appears, select <strong>Do not show this message again</strong>, and then click <strong>OK</strong>.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>Review the three entities that have been generated and the associations between them.</li>
+<li>Right-click the designer surface, and then click <strong>Mapping Details</strong>.</li>
+<li>In the <strong>Designer</strong> pane, click <strong>Employee</strong>.</li>
+<li>In the <strong>Mapping Details</strong> pane, review the mappings between the entity and the data source.</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>FourthCoffeeEmployeesModel.edmx</strong>, expand <strong>FourthCoffeeEmployeesModel.Context.tt</strong>, and then double-click <strong>FourthCoffeeEmployeesModel.Context.cs</strong>.</li>
+<li>In the code editor, review the code in the <strong>FourthCoffeeEntities</strong> partial class.</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>FourthCoffeeEmployeesModel.tt</strong>, and then double-click <strong>Employee.cs</strong>.</li>
+<li>Review the <strong>Employee</strong> partial class and the properties that have been generated.</li>
+<li>Leave the solution open so that you can refer to it in the following topics.</li>
+</ol>
+<h3 id="reading-and-modifying-data-in-an-edm">Reading and Modifying Data in an EDM</h3>
+<h4 id="preparation-steps-1">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps-1">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open File</strong> dialog box to, browse to the <strong>[Repository Root]\Labs\DataLab\Demo2\FourthCoffee.Employees</strong>, and then open the <strong>FourthCoffee.Employees.sln</strong> file.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>FourthCoffee.Employees</strong>, and then double-click <strong>Program.cs</strong>.</li>
+<li>Review the definition of the <strong>DBContext</strong> variable.</li>
+<li>Review the code in the <strong>PrintEmployeesList</strong> method that uses the <strong>DBContext</strong> variable to access the data in the EDM.</li>
+<li>Review the code in the <strong>Main</strong> method that uses the <strong>First</strong> extension method to retrieve an employee and then modifies that employee’s <strong>LastName</strong> property.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>Verify that the employees list is displayed, and then press Enter.</li>
+<li>Verify that the employee named <strong>Diane Prescott</strong> is now named <strong>Diane Forsyth</strong> and then press Enter.</li>
+<li>To close the application, press Enter.</li>
+</ol>
+<h2 id="querying-data-by-using-linq">Querying Data by Using LINQ</h2>
+<h4 id="preparation-steps-2">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps-2">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to the <strong>[Repository Root]\Labs\DataLab\Demo3\FourthCoffee.Employees</strong> folder, click <strong>FourthCoffee.Employees.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>FourthCoffee.Employees</strong>, and then double-click <strong>Program.cs</strong>.</li>
+<li>Review the LINQ code in each of the methods.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the console window, review the output of the <strong>QueryingData</strong> method, and then press Enter.</li>
+<li>Repeat step 8 for each of the following methods:
+<ul>
+<li><strong>FilteringDataByRow</strong></li>
+<li><strong>FilteringDataByColumn</strong></li>
+</ul>
+</li>
+<li>To close the application, press Enter.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+<h3 id="querying-data-by-using-anonymous-types">Querying Data by Using Anonymous Types</h3>
+<h4 id="preparation-steps-3">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps-3">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to the <strong>[Repository Root]\Labs\DataLab\Demo4\FourthCoffee.Employees</strong> folder, click <strong>FourthCoffee.Employees.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p>**Note 😗* If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In <strong>Solution Explorer</strong>, expand <strong>FourthCoffee.Employees</strong>, and then double-click <strong>Program.cs</strong>.</li>
+<li>Review the LINQ code in each of the methods.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the console window, review the output of the <strong>UsingAnonymousTypes</strong> method, and then press Enter.</li>
+<li>Repeat step 8 for each of the following methods:
+<ul>
+<li><strong>GroupingData</strong></li>
+<li><strong>AggregatingData</strong></li>
+<li><strong>NavigatingData</strong></li>
+</ul>
+</li>
+<li>To close the application, press Enter.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, click <strong>Close Solution</strong>.</li>
+</ol>
+
+<div style="margin-top: 30px;margin-bottom: 10px;font-size: 0.8em;border-top: 1px solid #eee;padding-top: 8px;cursor: pointer;"
+     title="This message doesn't display in the registered version of Markdown Monster." onclick="window.open('https://markdownmonster.west-wind.com')">
+    <img src="https://markdownmonster.west-wind.com/favicon.png"
+         style="height: 20px;float: left; margin-right: 10px;"/>
+    created with the evaluation version of
+    <a href="https://markdownmonster.west-wind.com"
+       target="top">Markdown Monster</a>
+</div>
