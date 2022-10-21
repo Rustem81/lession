@@ -1,0 +1,123 @@
+﻿<h1 id="creating-reusable-types-and-assemblies">Creating Reusable Types and Assemblies</h1>
+<h2 id="examining-object-metadata">Examining Object Metadata</h2>
+<h4 id="preparation-steps">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to the <strong>[Repository Root]\Labs\ReflectionLab\Starter\FourthCoffee.TypeInspector</strong> folder, click <strong>FourthCoffee.TypeInspector.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In Visual Studio, on the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 01: Bring the System.Reflection namespace into scope</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">using System.Reflection;
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 02: Create an Assembly object</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">return Assembly.ReflectionOnlyLoadFrom(path);
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 03: Get all the types from the current assembly</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">return assembly.GetTypes();
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 04: Get a specific type from the current assembly</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">return assembly.GetType(typeName);
+</code></pre>
+</li>
+<li>In the code editor, locate the <strong>RenderMethods</strong> method, and then review the use of the <strong>IsPublic</strong>, <strong>IsStatic</strong>, <strong>ReturnType</strong>, and <strong>Name</strong> properties of the <strong>MethodInfo</strong> class.</li>
+<li>Locate the <strong>RenderProperties</strong> method, and then review the use of the <strong>DeclaringType</strong> and <strong>Name</strong> properties of the <strong>PropertyInfo</strong> class.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Fourth Coffee Type Inspector</strong> application, click <strong>Load Assembly</strong>.</li>
+<li>In the <strong>Open</strong> dialog box, browse to the <strong>[Repository Root]\Labs\ReflectionLab\Starter\FourthCoffee.TypeInspector\FourthCoffee.Core\bin\Debug</strong> folder, click <strong>FourthCoffee.Core.dll</strong>, and then click <strong>Open</strong>. The <strong>Types</strong> list now contains a list of all of the types that the assembly exposes.</li>
+<li>In the <strong>Types</strong> list, click <strong>FourthCoffee.Core.Encryptor</strong>, and then click <strong>Inspect Type</strong>. The <strong>Members</strong> list now shows all of the methods that the type exposes.</li>
+<li>Close <strong>Fourth Coffee Type Inspector</strong>.</li>
+<li>In Visual Studio, close the solution.</li>
+</ol>
+<h2 id="creating-and-using-custom-attributes">Creating and Using Custom Attributes</h2>
+<h4 id="preparation-steps-1">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps-1">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to the <strong>[Repository Root]\Labs\ReflectionLab\Starter\FourthCoffee.MetadataExtractor</strong> folder, click <strong>FourthCoffee.MetadataExtractor.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>In Visual Studio, on the <strong>View</strong> menu, click <strong>Task List</strong>.</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 01: Invoke the Type.GetCustomAttribute method</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">var typeAttribute = type.GetCustomAttribute&lt;DeveloperInfo&gt;(false);
+</code></pre>
+</li>
+<li>In the <strong>Task List</strong> window, double-click the <strong>TODO: 02: Invoke the MemberInfo.GetCustomAttribute method</strong> task.</li>
+<li>In the code editor, click in the blank line below the comment, and then type the following code:
+<pre><code class="language-cs">var memberAttribute = member.GetCustomAttribute&lt;DeveloperInfo&gt;(false);
+</code></pre>
+</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>On the <strong>Debug</strong> menu, click <strong>Start Without Debugging</strong>.</li>
+<li>In the <strong>Fourth Coffee Metadata Extractor</strong> application, click <strong>Load</strong>. The list box now contains a list of all of the members in the <strong>Encryptor</strong> type and the details from any <strong>DeveloperInfo</strong> attributes that were found.</li>
+<li>Close <strong>Fourth Coffee Metadata Extractor</strong>.</li>
+<li>In Visual Studio, close the solution.</li>
+</ol>
+<h2 id="versioning-signing-and-deploying-assemblies">Versioning, Signing, and Deploying Assemblies</h2>
+<h4 id="preparation-steps-2">Preparation Steps</h4>
+<p>Ensure that you have cloned the directory it contains the code segments for this course's labs and demos.</p>
+<h4 id="steps-2">Steps</h4>
+<ol>
+<li>Open <strong>Visual Studio</strong>.</li>
+<li>In Visual Studio, on the <strong>File</strong> menu, point to <strong>Open</strong>, and then click <strong>Project/Solution</strong>.</li>
+<li>In the <strong>Open Project</strong> dialog box, browse to the <strong>[Repository Root]\AllFiles\Mod12\Democode\Starter\FourthCoffee.Core</strong> folder, click <strong>FourthCoffee.Core.sln</strong>, and then click <strong>Open</strong>.
+<blockquote>
+<p><strong>Note:</strong> If any Security warning dialog box appears, clear <strong>Ask me for every project in this solution</strong> check box and then click <strong>OK</strong>.</p>
+</blockquote>
+</li>
+<li>Open <strong>Windows Menu</strong> and type <strong>Developer Command Prompt for VS</strong>, right click on the app
+then select <strong>Run as adiministrator</strong>.</li>
+<li>Paste the following command and then press <strong>Enter</strong>:
+<pre><code class="language-cs">cd [Repository Root]\Labs\ReflectionLab\Starter\FourthCoffee.Core\FourthCoffee.Core
+</code></pre>
+</li>
+<li>Paste the following command and then press <strong>Enter</strong>:
+<pre><code class="language-cs">generateKeyFile.cmd
+</code></pre>
+</li>
+<li>Switch to Visual Studio.</li>
+<li>In <strong>Solution Explorer</strong>, right-click <strong>FourthCoffee.Core</strong>, and then click <strong>Properties</strong>.</li>
+<li>On the <strong>Signing</strong> tab, select <strong>Sign the assembly</strong>.</li>
+<li>In the <strong>Choose a strong name key file</strong> list, click <strong>Browse</strong>.</li>
+<li>In the <strong>Select File</strong> dialog box, click <strong>FourthCoffeeKeyFile.snk</strong>, and then click <strong>Open</strong>.</li>
+<li>On the <strong>Build</strong> menu, click <strong>Build Solution</strong>.</li>
+<li>Switch to File Explorer.</li>
+<li>In the <strong>[Repository Root]\Labs\ReflectionLab\Starter\FourthCoffee.Core\FourthCoffee.Core</strong> folder, right-click the <strong>installAssemblyInGac.cmd</strong> file, and then click <strong>Edit</strong>.
+<blockquote>
+<p>**Note 😗* If a Windows protected your PC dialog appears, click <strong>More info</strong> and then click <strong>Run Anyway</strong>.</p>
+</blockquote>
+</li>
+<li>In Notepad, view the <strong>Gacutil</strong> command.</li>
+<li>Close Notepad, and then close File Explorer.</li>
+<li>Switch back to <strong>Developer Command Prompt for VS</strong> and then run the <strong>installAssemblyInGac</strong> command. Verify that the command completes successfully.</li>
+<li>Run the <strong>verifyGacInstall</strong> command, and then ensure that the number of items found equals one.</li>
+<li>Close the <strong>Administrator: Developer Command Prompt for VS</strong> window.</li>
+<li>In Visual Studio, close the solution.</li>
+</ol>
+
+<div style="margin-top: 30px;margin-bottom: 10px;font-size: 0.8em;border-top: 1px solid #eee;padding-top: 8px;cursor: pointer;"
+     title="This message doesn't display in the registered version of Markdown Monster." onclick="window.open('https://markdownmonster.west-wind.com')">
+    <img src="https://markdownmonster.west-wind.com/favicon.png"
+         style="height: 20px;float: left; margin-right: 10px;"/>
+    created with the evaluation version of
+    <a href="https://markdownmonster.west-wind.com"
+       target="top">Markdown Monster</a>
+</div>
